@@ -13,7 +13,20 @@ For example:
 func YourFunction() error {
 	// ...
 
-	err := httperror.
+	err := httperror.ErrorFromStatus(response.StatusCode)
+	return err
+}
+
+// ...
+err := YourFunction()
+if err != nil {
+	if errors.Is(err, httperror.ErrStatusNotFound) {
+		// The item couldn't be found; do something.
+	} else if errors.Is(err, httperror.ErrStatusUnauthorized) {
+		// The user isn't signed in; do something else.
+	} else {
+		// Fail in a different way.
+	}
 }
 ```
 
