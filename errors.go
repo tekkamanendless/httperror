@@ -127,7 +127,7 @@ var errorStatusMap = map[int]error{
 
 // ErrorFromStatus returns the error for the corresponding HTTP status code.
 //
-// If no such status could be found, ErrStatus is returned.
+// If no such status could be found, a new Error is returned with the appropriate status code.
 func ErrorFromStatus(status int) error {
 	// If we have a mapped error, then return that.
 	if err := errorStatusMap[status]; err != nil {
@@ -143,7 +143,7 @@ func ErrorFromStatus(status int) error {
 
 // StatusFromError returns the status code for the error.
 //
-// If the error is not an HTTP error, then this returns 0.
+// If the error is not an Error, then this returns 0.
 func StatusFromError(err error) int {
 	var e *Error
 	if errors.As(err, &e) {
